@@ -4,7 +4,7 @@ import LibrarySvg from '../assets/Library.svg';
 import { faBars, faShoppingCart, faXmark, faBolt, faBookOpen, faTags, faStar, faStarHalfStroke } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
 
-const Nav = () => {
+const Nav = ({ numberOfItems }) => {
     function openMenu() {
       document.body.classList += " menu--open";
     }
@@ -38,6 +38,9 @@ const Nav = () => {
             <Link to="/cart" className="nav__link">
               <FontAwesomeIcon icon={faShoppingCart} />
             </Link>
+            {
+              numberOfItems > 0 && <span className='cart__length'>{numberOfItems}</span>
+            }
           </li>
           </ul>
   

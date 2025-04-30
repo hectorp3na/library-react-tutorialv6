@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Rating from "../components/ui/Rating";
 import Price from "../components/ui/Price";
@@ -10,16 +10,20 @@ const BookInfo = ({ books, addToCart, cart,}) => {
   const { id } = useParams();
   const book = books.find((book) => +book.id === +id);
 
-  const [isInCart, setIsInCart] = useState(bookExistsOnCart());
+  const [isInCart, setIsInCart] = useState(false);
  
   function addBookToCart(book) {
     addToCart(book);
     setIsInCart(true);
   }
 
-  function bookExistsOnCart() {
-    return (cart || []).find(book => book.id === +id);
-  }
+  useEffect(() => {
+    function bookExistsOnCart() {
+      return (cart || []).find(book => book.id === +id);
+    }
+    
+    setIsInCart(bookExistsOnCart());
+  }, [id, cart]);  
 
   
   return (
